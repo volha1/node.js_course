@@ -50,11 +50,7 @@ export class EventEmitter {
   }
 
   rawListeners(eventName) {
-    if(!this.listeners[eventName]) {
-      return []
-    }
-
-    return this.listeners[eventName];
+    return this.listeners[eventName] || [];
   }
 }
 
