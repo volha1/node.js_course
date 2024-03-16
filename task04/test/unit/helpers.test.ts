@@ -1,14 +1,18 @@
 import {validateInput, shortenPublicHoliday} from '../../helpers'
 import {holidays, shortHolidays} from '../test-data'
+import {SUPPORTED_COUNTRIES} from "../../config";
+
+const year = 2024;
+const country = SUPPORTED_COUNTRIES[0];
 
 describe('Validate input', () => {
   test('should return true if year and country are correct',  () => {
-    const inputValidationResult = validateInput({year: 2024, country: "GB"});
+    const inputValidationResult = validateInput({year, country});
     expect(inputValidationResult).toBe(true);
   });
 
   test('should return true if country is correct',  () => {
-    const inputValidationResult = validateInput({country: "GB"});
+    const inputValidationResult = validateInput({country});
     expect(inputValidationResult).toBe(true);
   });
 
