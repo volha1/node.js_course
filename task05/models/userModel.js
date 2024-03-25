@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-let users = require('../models/users');
+let users = require('../models/users.db');
 
 function getAll() {
   return new Promise((resolve, reject) => {
