@@ -5,7 +5,7 @@ import {SUPPORTED_COUNTRIES} from "../../config";
 const year = 2024;
 const country = SUPPORTED_COUNTRIES[0];
 
-describe('Validate input', () => {
+describe('Validate incoming parameters for public-holidays service', () => {
   test('should return true if year and country are correct',  () => {
     const inputValidationResult = validateInput({year, country});
     expect(inputValidationResult).toBe(true);
