@@ -6,39 +6,33 @@ const {
   updateUserHobbies,
   removeUser,
 } = require('./controllers/userController');
+const { routeHandler } = require('./utils/utils');
 
-const url = '/api/users';
-const urlWithUserId = `${url}/[a-zA-Z0-9-]+`;
+const url = '/api/users$';
+const urlWithUserId = `/api/users/[a-zA-Z0-9-]+`;
+
+const routesConfig = [
+  { path: new RegExp(url), method: 'GET', handler: getUsers },
+  { path: new RegExp(url), method: 'POST', handler: createUser },
+  {
+    path: new RegExp(`${urlWithUserId}`),
+    method: 'DELETE',
+    handler: removeUser,
+  },
+  {
+    path: new RegExp(`${urlWithUserId}\/hobbies`),
+    method: 'GET',
+    handler: getUserHobbies,
+  },
+  {
+    path: new RegExp(`${urlWithUserId}\/hobbies`),
+    method: 'PATCH',
+    handler: updateUserHobbies,
+  },
+];
 
 const server = http.createServer(async (req, res) => {
-  const pathName = req.url;
-
-  if (pathName === url && req.method === 'GET') {
-    await getUsers(req, res);
-  } else if (pathName === url && req.method === 'POST') {
-    await createUser(req, res);
-  } else if (
-    req.url.match(new RegExp(`${urlWithUserId}`)) &&
-    req.method === 'DELETE'
-  ) {
-    const id = req.url.split('/')[3];
-    await removeUser(req, res, id);
-  } else if (
-    req.url.match(new RegExp(`${urlWithUserId}\/hobbies`)) &&
-    req.method === 'GET'
-  ) {
-    const id = req.url.split('/')[3];
-    await getUserHobbies(req, res, id);
-  } else if (
-    req.url.match(new RegExp(`${urlWithUserId}\/hobbies`)) &&
-    req.method === 'PATCH'
-  ) {
-    const id = req.url.split('/')[3];
-    await updateUserHobbies(req, res, id);
-  } else {
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: "This route doesn't exist" }));
-  }
+  routeHandler(routesConfig, req, res);
 });
 
 server.listen(8000, () => {

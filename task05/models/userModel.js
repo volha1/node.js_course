@@ -2,9 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 let users = require('../models/users.db');
 
 function getAll() {
-  return new Promise((resolve, reject) => {
-    resolve(users);
-  });
+  return Promise.resolve(users);
 }
 
 function getById(id) {

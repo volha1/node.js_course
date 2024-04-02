@@ -5,7 +5,11 @@ const {
   update,
   remove,
 } = require('../models/userModel');
-const { parseRequestBody, createUserResponse } = require('../utils/utils');
+const {
+  parseRequestBody,
+  createUserResponse,
+  sendUserNotFoundResponse,
+} = require('../utils/utils');
 
 async function getUsers(req, res) {
   try {
@@ -26,24 +30,15 @@ async function getUsers(req, res) {
   }
 }
 
-async function getUserHobbies(req, res, id) {
+async function getUserHobbies(req, res) {
   try {
+    const id = req.url.split('/')[3];
     const user = await getById(id);
     if (!user) {
-      res.writeHead(404, {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'private, max-age=3600',
-      });
-      res.end(
-        JSON.stringify({
-          data: null,
-          error: `User with id ${id} doesn't exist`,
-        })
-      );
-    } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ hobbies: user.hobbies }));
+      sendUserNotFoundResponse(res, id);
     }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ hobbies: user.hobbies }));
   } catch (error) {
     console.log(error);
   }
@@ -66,61 +61,50 @@ async function createUser(req, res) {
   }
 }
 
-async function updateUserHobbies(req, res, id) {
+async function updateUserHobbies(req, res) {
   try {
+    const id = req.url.split('/')[3];
     const user = await getById(id);
 
     if (!user) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(
-        JSON.stringify({
-          data: null,
-          error: `User with id ${id} doesn't exist`,
-        })
-      );
-    } else {
-      const { hobbies } = await parseRequestBody(req);
-      const userForUpdate = {
-        ...user,
-        hobbies: [...new Set([...user.hobbies, ...hobbies])],
-      };
-      const updatedUser = await update(id, userForUpdate);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(
-        JSON.stringify({
-          data: createUserResponse(updatedUser),
-          error: null,
-        })
-      );
+      sendUserNotFoundResponse(res, id);
     }
+    const { hobbies } = await parseRequestBody(req);
+    const userForUpdate = {
+      ...user,
+      hobbies: [...new Set([...user.hobbies, ...hobbies])],
+    };
+    const updatedUser = await update(id, userForUpdate);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(
+      JSON.stringify({
+        data: createUserResponse(updatedUser),
+        error: null,
+      })
+    );
   } catch (error) {
     console.log(error);
   }
 }
 
-async function removeUser(req, res, id) {
+async function removeUser(req, res) {
   try {
+    const id = req.url.split('/')[3];
+    console.log(id);
     const user = await getById(id);
     if (!user) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(
-        JSON.stringify({
-          data: null,
-          error: `User with id ${id} doesn't exist`,
-        })
-      );
-    } else {
-      await remove(id);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(
-        JSON.stringify({
-          data: {
-            success: true,
-          },
-          error: null,
-        })
-      );
+      sendUserNotFoundResponse(res, id);
     }
+    await remove(id);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(
+      JSON.stringify({
+        data: {
+          success: true,
+        },
+        error: null,
+      })
+    );
   } catch (error) {
     console.log(error);
   }
