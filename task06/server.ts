@@ -8,9 +8,6 @@ const app = express();
 app.use(express.json());
 app.use('/api', globalRoute);
 
-// app.use('/api/products', productRouter);
-// app.use('/api/profile/cart', cartRouter);
-
 app.use(handleErrorMiddleware);
 
 app.listen(PORT, () => {
