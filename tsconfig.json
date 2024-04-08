@@ -4,7 +4,7 @@
     "module": "commonjs",                    
     "lib": ["es6"],                    
     "outDir": "dist",                          
-    "rootDir": "task04",
+    "rootDirs": ["task04", "task06"],
     "strict": true,         
     "noImplicitAny": true,
     "esModuleInterop": true,
