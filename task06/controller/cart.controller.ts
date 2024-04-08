@@ -60,16 +60,15 @@ export const updateCart = (req: Request, res: Response) => {
 
   if (!cartWithTotalPrice) {
     throw new AppError(HttpStatusCode.NOT_FOUND, 'Cart was not found', true);
-  } else {
-    res.send({
-      data: {
-        cart: {
-          id: cartWithTotalPrice.cart.id,
-          items: cartWithTotalPrice.cart.items,
-        },
-        total: cartWithTotalPrice.totalPrice,
-      },
-      error: null,
-    });
   }
+  res.send({
+    data: {
+      cart: {
+        id: cartWithTotalPrice.cart.id,
+        items: cartWithTotalPrice.cart.items,
+      },
+      total: cartWithTotalPrice.totalPrice,
+    },
+    error: null,
+  });
 };

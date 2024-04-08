@@ -1,16 +1,17 @@
 import express from 'express';
-import productRouter from './routes/product.route';
-import cartRouter from './routes/cart.route';
-import { handleError } from './controller/error.controller';
+import globalRoute from './routes/global.route';
+import { handleErrorMiddleware } from './errors/middlewares';
 
 const PORT = 8000;
 const app = express();
 
 app.use(express.json());
-app.use('/api/products', productRouter);
-app.use('/api/profile/cart', cartRouter);
+app.use('/api', globalRoute);
 
-app.use(handleError);
+// app.use('/api/products', productRouter);
+// app.use('/api/profile/cart', cartRouter);
+
+app.use(handleErrorMiddleware);
 
 app.listen(PORT, () => {
   console.log('Server is started');

@@ -3,7 +3,7 @@ import { fetchUser } from '../service/user.service';
 import { AppError } from '../errors/appError';
 import { HttpStatusCode } from '../errors/statusCode';
 
-export const authenticateUser = (
+export const authenticateUserMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction

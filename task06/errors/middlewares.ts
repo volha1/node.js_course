@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { AppError } from '../errors/appError';
-import { HttpStatusCode } from '../errors/statusCode';
+import { AppError } from './appError';
+import { HttpStatusCode } from './statusCode';
 
-export const handleError = (
+export const handleErrorMiddleware = (
   err: AppError,
   req: Request,
   res: Response,

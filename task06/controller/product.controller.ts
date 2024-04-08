@@ -17,7 +17,6 @@ export const getProduct = (req: Request, res: Response) => {
       'No product with such id',
       true
     );
-  } else {
-    res.send({ data: product, error: null });
   }
+  res.send({ data: product, error: null });
 };
