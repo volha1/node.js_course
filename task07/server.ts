@@ -1,12 +1,16 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import donenv from 'dotenv';
 import { handleErrorMiddleware } from './error/middlewares';
 import { AppError } from './error/appError';
 import { HttpStatusCode } from './error/statusCode';
 import globalRoute from '../task06/routes/global.route';
 
-const PORT = 8000;
+donenv.config();
+
+const PORT = process.env.PORT || 8000;
 const uri: string =
+  process.env.MONGO_DB_URL ||
   'mongodb://root:nodegmp@127.0.0.1:27017/mydatabase?authSource=admin';
 
 const app = express();
