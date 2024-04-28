@@ -3,7 +3,7 @@ import { ProductEntity } from '../../entity/product.entity';
 import { ProductSchema } from './productModel';
 
 interface ICart extends Document {
-  userId: string;
+  email: string;
   isDeleted: boolean;
   items: [
     {
@@ -14,7 +14,7 @@ interface ICart extends Document {
 }
 
 const CartSchema: Schema = new Schema({
-  userId: {
+  email: {
     type: String,
     required: true,
     unique: true,

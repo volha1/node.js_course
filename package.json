@@ -19,14 +19,17 @@
     "migration:create": "typeorm migration:create task08/repository/migration/CartItemsTable",
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d task08/repository/datasource/dataSource.ts",
     "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d task08/repository/datasource/dataSource.ts",
-    "seed:run": "ts-node task08/repository/seeding/seed.ts"
+    "seed:run": "ts-node task08/repository/seeding/seed.ts",
+    "start9": "nodemon task09/server.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/faker": "^6.6.9",
     "@types/jest": "^29.5.12",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.11.26",
     "@types/supertest": "^6.0.2",
@@ -44,11 +47,14 @@
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
     "axios": "^1.6.7",
+    "bcryptjs": "^2.4.3",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "faker": "^6.6.6",
     "joi": "^17.12.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^5.9.2",
     "mongoose": "^8.2.4",
     "pg": "^8.11.5",
     "reflect-metadata": "^0.2.2",
