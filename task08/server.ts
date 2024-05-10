@@ -1,17 +1,14 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { handleErrorMiddleware } from './error/middlewares';
 import { AppError } from './error/appError';
 import { HttpStatusCode } from './error/statusCode';
-import globalRoute from '../task07/routes/global.route';
+import globalRoute from '../task08/routes/global.route';
+import dataSource from './repository/datasource/dataSource';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
-const uri: string =
-  process.env.MONGO_DB_URL ||
-  'mongodb://root:nodegmp@127.0.0.1:27017/mydatabase?authSource=admin';
 
 const app = express();
 app.use(express.json());
@@ -20,13 +17,14 @@ app.use('/api', globalRoute);
 app.all('*', (req, res, next) => {
   return next(new AppError('There is no such route', HttpStatusCode.NOT_FOUND));
 });
-mongoose
-  .connect(uri)
+
+dataSource
+  .initialize()
   .then(() => {
-    console.log('Succesfully connected to MongoDB');
+    console.log('Connected to PostgreSQL');
   })
-  .catch((error: Error) => {
-    console.log(`Error connecting to MongoDB: ${error.message}`);
+  .catch((err: Error) => {
+    console.error(`Error connecting to PostgreSQL: ${err}`);
   });
 
 app.use(handleErrorMiddleware);
