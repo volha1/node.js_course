@@ -20,7 +20,9 @@
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d task08/repository/datasource/dataSource.ts",
     "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d task08/repository/datasource/dataSource.ts",
     "seed:run": "ts-node task08/repository/seeding/seed.ts",
-    "start9": "nodemon task09/server.ts"
+    "start9": "nodemon task09/server.ts",
+    "start10": "set NODE_ENV=development && nodemon task10/server.ts",
+    "start10:prod": "set NODE_ENV=production && nodemon task10/server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +33,7 @@
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^20.11.26",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^9.0.8",
@@ -51,17 +54,20 @@
     "csvtojson": "^2.0.10",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-healthcheck": "^0.1.0",
     "faker": "^6.6.6",
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.9.2",
     "mongoose": "^8.2.4",
+    "morgan": "^1.10.0",
     "pg": "^8.11.5",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20",
     "typeorm-extension": "^3.5.1",
     "typeorm-seeding": "^1.6.1",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "winston": "^3.13.0"
   },
   "jest": {
     "testEnvironment": "node",
